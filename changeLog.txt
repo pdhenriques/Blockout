@@ -6,7 +6,10 @@ Author: Muad
 
 
 ##### TO DO ####
-Everything
+0. Everything
+1. Define data structure for the gamestate;
+2. Define initial gamestate states;
+3. Draw the gamestate;
 ##### END OF TO DO ####
 
 

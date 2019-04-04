@@ -5,6 +5,14 @@
 // Size of the Canvas
 var canvasWidth = 1280;
 var canvasHeight = 960;
+// Size of the squares
+var widthUnit = 100;
+var heightUnit = 100;
+var depthUnit = 100;
+// Size of the Pit
+var pitWidth = 3;
+var pitHeight = 3;
+var pitDepth = 20
 
 // Internal stuff
 var lastDraw;
@@ -33,7 +41,7 @@ function draw() {
     orbitControl();
     push();
     fill(255,0,0);
-    box(100);
+    box(widthUnit);
     pop();
 
     text3d('Default project of Muad', 860,100);
