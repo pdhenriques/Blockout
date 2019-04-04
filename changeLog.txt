@@ -1,0 +1,18 @@
+##############################################
+######         My New Project           ######
+##############################################
+Start Date: 2019 04 04
+Author: Muad
+
+
+##### TO DO ####
+Everything
+##### END OF TO DO ####
+
+
+.: Default Empty Project
+- P5js libraries
+- GameSpark libraries
+- default index.html
+- default style.css
+- default sketch.js
