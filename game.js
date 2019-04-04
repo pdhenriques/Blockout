@@ -6,11 +6,11 @@
 
 class game {
     
-    constructor(w, h) {
+    constructor(w, h, d) {
         this.state = 'start';
         this.width = w;
         this.height = h;
-        this.depth = d
+        this.depth = d;
         this.pit = [];
     }
 
@@ -34,12 +34,13 @@ class game {
     }
 
     fillPlane(x, y) {
-        this.plane = [];
-        this.pit.push(this.wallLine(x));
-        for(let i=0; i<y-1; i++) {
-            this.pit.push(this.fillLine(x));
+        let plane = [];
+        plane.push(this.wallLine(x));
+        for(let i=1; i<y-1; i++) {
+            plane.push(this.fillLine(x));
         }
-        this.pit.push(this.wallLine(x));
+        plane.push(this.wallLine(x));
+        return plane;
     }
 
     fillLine(x) {
@@ -53,10 +54,11 @@ class game {
     }
 
     wallPlane(x, y) {
-        this.plane = [];
-        for(let i=0; i<y-1; i++) {
-            this.pit.push(this.wallLine(x));
+        let plane = [];
+        for(let i=0; i<y; i++) {
+            plane.push(this.wallLine(x));
         }
+        return plane;
     }
 
     wallLine(x) {

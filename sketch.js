@@ -10,9 +10,9 @@ var widthUnit = 100;
 var heightUnit = 100;
 var depthUnit = 100;
 // Size of the Pit
-var pitWidth = 3;
-var pitHeight = 3;
-var pitDepth = 20
+var pitWidth = 5;
+var pitHeight = 5;
+var pitDepth = 15;
 
 // Internal stuff
 var lastDraw;
@@ -32,6 +32,8 @@ function setup() {
     pixelDensity(1);
     background(51);
 
+    game = new game(pitWidth, pitHeight, pitDepth);
+    game.start();
 }
 
 function draw() {
@@ -39,12 +41,17 @@ function draw() {
 
     background(51);
     orbitControl();
-    push();
-    fill(255,0,0);
-    box(widthUnit);
-    pop();
+    // push();
+    // fill(255,0,0);
+    // box(widthUnit);
+    // pop();
 
-    text3d('Default project of Muad', 860,100);
+    // text3d('Default project of Muad', 860,100);
+
+    translate(widthUnit/2, heightUnit/2, depthUnit/2);
+    translate(-pitWidth/2*widthUnit, -pitHeight/2*widthUnit, -(pitDepth)*depthUnit+400);
+    drawPit();
+
 
     lastDraw = millis();
 }
