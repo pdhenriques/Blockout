@@ -6,9 +6,9 @@
 var canvasWidth = 1280;
 var canvasHeight = 960;
 // Size of the squares
-var widthUnit = 100;
-var heightUnit = 100;
-var depthUnit = 100;
+// var widthUnit = 100;
+// var heightUnit = 100;
+// var depthUnit = 100;
 // Size of the Pit
 var pitWidth = 5;
 var pitHeight = 5;
@@ -34,6 +34,7 @@ function setup() {
 
     game = new game(pitWidth, pitHeight, pitDepth);
     game.start();
+    drawGame = new drawGame(pitWidth, pitHeight, pitDepth);
 }
 
 function draw() {
@@ -48,10 +49,11 @@ function draw() {
 
     // text3d('Default project of Muad', 860,100);
 
-    translate(widthUnit/2, heightUnit/2, depthUnit/2);
-    translate(-pitWidth/2*widthUnit, -pitHeight/2*widthUnit, -(pitDepth)*depthUnit+400);
-    drawPit();
-
+    // translate(drawGame.widthUnit/2, drawGame.heightUnit/2, drawGame.depthUnit/2);
+    translate(-pitWidth/2*drawGame.widthUnit, -pitHeight/2*drawGame.widthUnit, -(pitDepth)*drawGame.depthUnit+400);
+    // translate(0, 0, -(pitDepth)*drawGame.depthUnit+400);
+    drawGame.drawPit();
+    text3d('fr', 200, 200);
 
     lastDraw = millis();
 }
@@ -68,7 +70,7 @@ function text3d(t, x, y) {
         console.log('created _text');
     }
     push();
-    translate(0, -height/2 + height/8);
+    // translate(0, -height/2 + height/8);
 	texture(_text);
     plane(x, y);
     pop();

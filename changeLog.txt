@@ -5,13 +5,13 @@ Start Date: 2019 04 04
 Author: Muad
 
 
-##### TO DO ####
-0. Everything
+##### START OF Task List ####
 1. Define data structure for the gamestate;
 2. Define initial gamestate states;
 3. Draw the gamestate;
-
-##### END OF TO DO ####
+4. Draw thin and dynamic walls (fail)
+5. Test Thee.JS library for rendering 3D Instead of P5.js
+##### END OF Task List ####
 
 
 .: Default Empty Project
