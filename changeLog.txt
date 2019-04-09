@@ -9,8 +9,10 @@ Author: Muad
 1. Define data structure for the gamestate;
 2. Define initial gamestate states;
 3. Draw the gamestate;
-4. Draw thin and dynamic walls (fail)
+4. Draw thin and dynamic walls (failed)
 5. Test Thee.JS library for rendering 3D Instead of P5.js
+6. Draw thick lines in Three.JS (failed)
+7. Draw Pit walls in thin lines
 ##### END OF Task List ####
 
 

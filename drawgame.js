@@ -5,8 +5,12 @@ class drawGame {
         this.widthUnit = 100;
         this.heightUnit = 100;
         this.depthUnit = 100;
-        this.wallColor = color(100, 200, 100, 255);
+        // this.wallColor = color(100, 200, 100, 255);
 
+        // wall
+        var wallGeo = new THREE.BoxBufferGeometry(50, 50, 1);
+        var wallMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000, opacity: 0.5, transparent: true });
+        this.wallMesh = new THREE.Mesh(wallGeo, wallMaterial);
     }
 
     drawPit() {
@@ -18,111 +22,104 @@ class drawGame {
                 let line = game.pit[d][h];
                 for (let w = 0; w < line.length; w++) {
                     if (game.pit[d][h][w] == 'W') {
-                        push();
-                        fill(100, 100, 200, 150);
-                        translate(w * this.widthUnit, h * this.heightUnit, d * this.depthUnit);
-                        this.drawWall('back');
-                        this.drawWall('top');
-                        this.drawWall('left');
-                        this.drawWall('right');
-                        this.drawWall('bottom');
-                        this.drawWall('front');
-                        pop();
+                        
                     }
                     if (game.pit[d][h][w] == 'A') {
-                        push();
-                        fill(250, 100, 100);
-                        translate(w, h, d);
-                        box(widthUnit);
-                        pop();
+                        
                     }
                     if (game.pit[d][h][w] == 'B') {
-                        push();
-                        fill(230, 230, 230);
-                        translate(w, h, d);
-                        box(widthUnit);
-                        pop();
+                        
                     }
                 }
             }
         }
     }
 
-    drawPitBlock(x, y, widthUnit, heightUnit) {
-        rect(x * widthUnit + transX, y * heightUnit + transY, widthUnit, heightUnit);
+    
+    drawWall() {
+        var size = 100;
+        var x = 3; 
+        var y = 3;
+        var color = new THREE.Color( color !== undefined ? color : 0x55aa55 );
+        // grid
+        var wallGrid0 = new WallGrid(size, 3, 3, color);
+        scene.add(wallGrid0);
+        var wallGrid1 = new WallGrid(size, 10, 3, color);
+        wallGrid1.rotateX(-Math.PI / 2);
+        scene.add(wallGrid1);
+        var wallGrid2 = new WallGrid(size, 10, 3, color);
+        wallGrid2.rotateX(-Math.PI / 2);
+        wallGrid2.rotateZ(-Math.PI / 2);
+        scene.add(wallGrid2);
+        var wallGrid3 = new WallGrid(size, 10, 3, color);
+        wallGrid3.rotateX(-Math.PI / 2);
+        wallGrid3.translateY(-size * 3);
+        scene.add(wallGrid3);
+        var wallGrid4 = new WallGrid(size, 10, 3, color);
+        wallGrid4.rotateX(-Math.PI / 2);
+        wallGrid4.rotateZ(-Math.PI / 2);
+        wallGrid4.translateY(size * 3);
+        scene.add(wallGrid4);
     }
 
-    // drawGame.drawWall('back');
-    // drawGame.drawWall('top');
-    // drawGame.drawWall('left');
-    // drawGame.drawWall('right');
-    // drawGame.drawWall('bottom');
-    // drawGame.drawWall('front');
-    drawWall(type) {
-        translate(0, 0, 0);
-        stroke(this.wallColor);
-        strokeWeight(4);
-        switch (type) {
-            case 'top':
-                // Y = 0
-                beginShape(POINTS);
-                vertex(0, 0, 0);
-                vertex(this.widthUnit, 0, 0);
-                vertex(this.widthUnit, 0, this.depthUnit);
-                vertex(0, 0, this.depthUnit);
-                vertex(0, 0, 0);
-                endShape();
-                break;
-            case 'bottom':
-                // Y = 0
-                beginShape(POINTS);
-                vertex(0, this.heightUnit, 0);
-                vertex(this.widthUnit, this.heightUnit, 0);
-                vertex(this.widthUnit, this.heightUnit, this.depthUnit);
-                vertex(0, this.heightUnit, this.depthUnit);
-                vertex(0, this.heightUnit, 0);
-                endShape();
-                break;
-            case 'front':
-                // Z = 1
-                beginShape(POINTS);
-                vertex(0, 0, this.depthUnit);
-                vertex(this.widthUnit, 0, this.depthUnit);
-                vertex(this.widthUnit, this.heightUnit, this.depthUnit);
-                vertex(0, this.heightUnit, this.depthUnit);
-                vertex(0, 0, this.depthUnit);
-                endShape();
-                break;
-            case 'back':
-                // Z = 0
-                beginShape(POINTS);
-                vertex(0, 0, 0);
-                vertex(this.widthUnit, 0, 0);
-                vertex(this.widthUnit, this.heightUnit, 0);
-                vertex(0, this.heightUnit, 0);
-                vertex(0, 0, 0);
-                endShape();
-                break;
-            case 'left':
-                // X = 0
-                beginShape(POINTS);
-                vertex(0, 0, 0);
-                vertex(0, this.heightUnit, 0);
-                vertex(0, this.heightUnit, this.depthUnit);
-                vertex(0, 0, this.depthUnit);
-                vertex(0, 0, 0);
-                endShape();
-                break;
-            case 'right':
-                // X = 0
-                beginShape(POINTS);
-                vertex(this.widthUnit, 0, 0);
-                vertex(this.widthUnit, this.heightUnit, 0);
-                vertex(this.widthUnit, this.heightUnit, this.depthUnit);
-                vertex(this.widthUnit, 0, this.depthUnit);
-                vertex(this.widthUnit, 0, 0);
-                endShape();
-                break;
-        }
-    }
 }
+
+
+function WallGrid( size, x, y, color ) {
+
+	size = size || 50;
+	divisionsX = x || 10;
+	divisionsY = y || 10;
+	color = new THREE.Color( color !== undefined ? color : 0x444444 );
+
+	lenX = size * divisionsX;
+	lenY = size * divisionsY;
+	centerX = divisionsX / 2;
+	centerY = divisionsY / 2;
+
+	var vertices = [], colors = [];
+
+	for ( var i = 0, j = 0, kx = 0, ky = 0; i <= Math.max(divisionsX, divisionsY); i ++, kx += size, ky += size ) {
+
+        if (i <= divisionsX) vertices.push( 0, 0, ky, lenY, 0, ky );
+		if (i <= divisionsY) vertices.push( kx, 0, 0, kx, 0, lenX );
+
+        color.toArray( colors, j ); j += 3;
+		color.toArray( colors, j ); j += 3;
+		color.toArray( colors, j ); j += 3;
+		color.toArray( colors, j ); j += 3;
+
+    }
+
+    var geometry = new THREE.BufferGeometry();
+	geometry.addAttribute( 'position', new THREE.Float32BufferAttribute( vertices, 3 ) );
+	geometry.addAttribute( 'color', new THREE.Float32BufferAttribute( colors, 3 ) );
+
+	var material = new THREE.LineBasicMaterial( { vertexColors: THREE.VertexColors } );
+
+	THREE.LineSegments.call( this, geometry, material );
+
+}
+
+WallGrid.prototype = Object.assign( Object.create( THREE.LineSegments.prototype ), {
+
+	constructor: WallGrid,
+
+	copy: function ( source ) {
+
+		THREE.LineSegments.prototype.copy.call( this, source );
+
+		this.geometry.copy( source.geometry );
+		this.material.copy( source.material );
+
+		return this;
+
+	},
+
+	clone: function () {
+
+		return new this.constructor().copy( this );
+
+	}
+
+} );
