@@ -13,6 +13,7 @@ Author: Muad
 5. Test Thee.JS library for rendering 3D Instead of P5.js
 6. Draw thick lines in Three.JS (failed)
 7. Draw Pit walls in thin lines
+8. Define coord system and adust Camera position
 ##### END OF Task List ####
 
 

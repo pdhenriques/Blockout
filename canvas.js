@@ -15,8 +15,8 @@ render();
 function init() {
 
     camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 10000);
-    camera.position.set(500, 800, 1300);
-    camera.lookAt(0, 0, 0);
+    // camera.position.set(0, 800, 0);
+    // camera.lookAt(0, 0, 0);
 
     scene = new THREE.Scene();
     scene.background = new THREE.Color(0x333333);
@@ -33,7 +33,7 @@ function init() {
     cubeMaterial = new THREE.MeshLambertMaterial({ color: 0x55aaaa, opacity: 0.5, transparent: false });
 
     // grid
-    var gridHelper = new THREE.GridHelper(1000, 20, 0x55aaaa, 0x55aaaa);
+    // var gridHelper = new THREE.GridHelper(1000, 20, 0x55aaaa, 0x55aaaa);
     // scene.add(gridHelper);
 
     //
@@ -66,7 +66,9 @@ function init() {
     document.addEventListener('keyup', onDocumentKeyUp, false);
     window.addEventListener('resize', onWindowResize, false);
 
+    game = new game(5, 5, 15);
     drawGame = new drawGame(5, 5, 15);
+    drawGame.adjustCameraPosition(camera);
     drawGame.drawWall();
 }
 
