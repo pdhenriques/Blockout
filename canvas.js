@@ -10,47 +10,18 @@ var rollOverMesh, cubeGeo, cubeMaterial;
 var objects = [];
 
 init();
-render();
+animate();
 
 function init() {
 
     camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 10000);
-    // camera.position.set(0, 800, 0);
-    // camera.lookAt(0, 0, 0);
 
     scene = new THREE.Scene();
     scene.background = new THREE.Color(0x333333);
 
-    // roll-over helpers
-    var rollOverGeo = new THREE.BoxBufferGeometry(50, 50, 50);
-    var rollOverMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000, opacity: 0.5, transparent: true });
-    rollOverMesh = new THREE.Mesh(rollOverGeo, rollOverMaterial);
-    scene.add(rollOverMesh);
-
-    // cubes
-    cubeGeo = new THREE.BoxBufferGeometry(50, 50, 50);
-    // cubeMaterial = new THREE.MeshLambertMaterial({ color: 0xfeb74c, map: new THREE.TextureLoader().load('textures/square-outline-textured.png') });
-    cubeMaterial = new THREE.MeshLambertMaterial({ color: 0x55aaaa, opacity: 0.5, transparent: false });
-
-    // grid
-    // var gridHelper = new THREE.GridHelper(1000, 20, 0x55aaaa, 0x55aaaa);
-    // scene.add(gridHelper);
-
-    //
-    raycaster = new THREE.Raycaster();
-    mouse = new THREE.Vector2();
-
-    // invisible plane (for raycast intersection)
-    var geometry = new THREE.PlaneBufferGeometry(1000, 1000);
-    geometry.rotateX(- Math.PI / 2);
-    plane = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({ visible: false }));
-    scene.add(plane);
-    objects.push(plane);
-
     // lights
     var ambientLight = new THREE.AmbientLight(0x606060);
     scene.add(ambientLight);
-
     var directionalLight = new THREE.DirectionalLight(0xffffff);
     directionalLight.position.set(1, 0.75, 0.5).normalize();
     scene.add(directionalLight);
@@ -59,17 +30,17 @@ function init() {
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setSize(window.innerWidth, window.innerHeight);
     document.body.appendChild(renderer.domElement);
-
-    document.addEventListener('mousemove', onDocumentMouseMove, false);
-    document.addEventListener('mousedown', onDocumentMouseDown, false);
-    document.addEventListener('keydown', onDocumentKeyDown, false);
-    document.addEventListener('keyup', onDocumentKeyUp, false);
     window.addEventListener('resize', onWindowResize, false);
 
+    drawLine(-1000, 0, 0, 1000, 0, 0, 0xff0000);
+    drawLine(0, -1000, 0, 0, 1000,  0, 0xffff00);
+    drawLine(0, 0,-1000,  0, 0, 1000, 0x0000ff);
+
     game = new game(5, 5, 15);
-    drawGame = new drawGame(5, 5, 15);
-    drawGame.adjustCameraPosition(camera);
-    drawGame.drawWall();
+    game.start();
+    drawGame = new drawGame(100, 100, 100);
+    
+    controls();
 }
 
 function onWindowResize() {
@@ -80,39 +51,17 @@ function onWindowResize() {
 
 function onDocumentMouseMove(event) {
     event.preventDefault();
-    mouse.set((event.clientX / window.innerWidth) * 2 - 1, - (event.clientY / window.innerHeight) * 2 + 1);
-    raycaster.setFromCamera(mouse, camera);
-    var intersects = raycaster.intersectObjects(objects);
-    if (intersects.length > 0) {
-        var intersect = intersects[0];
-        rollOverMesh.position.copy(intersect.point).add(intersect.face.normal);
-        rollOverMesh.position.divideScalar(50).floor().multiplyScalar(50).addScalar(25);
-    }
-    render();
+
 }
 
 function onDocumentMouseDown(event) {
     event.preventDefault();
-    mouse.set((event.clientX / window.innerWidth) * 2 - 1, - (event.clientY / window.innerHeight) * 2 + 1);
-    raycaster.setFromCamera(mouse, camera);
-    var intersects = raycaster.intersectObjects(objects);
-    if (intersects.length > 0) {
-        var intersect = intersects[0];
-        if (isShiftDown) { // delete cube
-            if (intersect.object !== plane) {
-                scene.remove(intersect.object);
-                objects.splice(objects.indexOf(intersect.object), 1);
 
-            }
-        } else { // create cube
-            var voxel = new THREE.Mesh(cubeGeo, cubeMaterial);
-            voxel.position.copy(intersect.point).add(intersect.face.normal);
-            voxel.position.divideScalar(50).floor().multiplyScalar(50).addScalar(25);
-            scene.add(voxel);
-            objects.push(voxel);
-        }
-        render();
-    }
+}
+
+function onDocumentMouseUp(event) {
+    event.preventDefault();
+    // drawGame.adjustCameraPosition(camera);
 }
 
 function onDocumentKeyDown(event) {
@@ -127,6 +76,31 @@ function onDocumentKeyUp(event) {
     }
 }
 
+function animate() {
+    requestAnimationFrame( animate );
+    // controls.update(); // only required if controls.enableDamping = true, or if controls.autoRotate = true
+    render();
+}
+
 function render() {
     renderer.render(scene, camera);
+}
+
+function controls() {
+    document.addEventListener('mousemove', onDocumentMouseMove, false);
+    document.addEventListener('mousedown', onDocumentMouseDown, false);
+    document.addEventListener('mouseup', onDocumentMouseUp, false);
+    document.addEventListener('keydown', onDocumentKeyDown, false);
+    document.addEventListener('keyup', onDocumentKeyUp, false);
+    // controls
+    controls = new THREE.OrbitControls( camera, renderer.domElement );
+    //controls.addEventListener( 'change', render ); // call this only in static scenes (i.e., if there is no animation loop)
+    controls.enableDamping = true; // an animation loop is required when either damping or auto-rotation are enabled
+    controls.dampingFactor = 1;
+    controls.screenSpacePanning = true;
+    controls.minDistance = 1;
+    controls.maxDistance = 9999999;
+    controls.maxPolarAngle = Math.PI / 2;
+    controls.target.set(150, 500, 150);
+    drawGame.adjustCameraPosition(camera);
 }

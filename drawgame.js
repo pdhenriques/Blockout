@@ -1,16 +1,20 @@
 class drawGame {
-    constructor() {
+    constructor(blockWidth, blockDepth, blockHeight) {
 
         // Size of the squares
-        this.widthUnit = 100;
-        this.heightUnit = 100;
-        this.depthUnit = 100;
+        this.widthUnit = blockWidth;
+        this.depthUnit = blockDepth;
+        this.heightUnit = blockHeight;
         // this.wallColor = color(100, 200, 100, 255);
 
-        // wall
-        var wallGeo = new THREE.BoxBufferGeometry(50, 50, 1);
-        var wallMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000, opacity: 0.5, transparent: true });
-        this.wallMesh = new THREE.Mesh(wallGeo, wallMaterial);
+        // block
+        this.blockGeo = new THREE.BoxBufferGeometry(this.widthUnit, this.depthUnit, this.heightUnit);
+        this.blockMaterial = new THREE.MeshLambertMaterial({ color: 0x55aaaa, opacity: 0.3, transparent: true });
+
+
+        this.adjustCameraPosition(camera);
+        this.drawWalls();
+        this.drawPit();
     }
 
     drawPit() {
@@ -22,10 +26,10 @@ class drawGame {
                 let line = game.pit[d][h];
                 for (let w = 0; w < line.length; w++) {
                     if (game.pit[d][h][w] == 'W') {
-                        
+                        // this.drawBlock(w, h, d)
                     }
                     if (game.pit[d][h][w] == 'A') {
-                        
+                        this.drawBlock(w, h, d)
                     }
                     if (game.pit[d][h][w] == 'B') {
                         
@@ -35,64 +39,77 @@ class drawGame {
         }
     }
 
+    drawBlock(w, h, d) {
+        var voxel = new THREE.Mesh(this.blockGeo, this.blockMaterial);
+        voxel.position.set((w-1) * this.widthUnit, (d-1) * this.depthUnit, (h-1) * this.heightUnit);
+        // snaping thingy
+        // voxel.position.divideScalar(100).floor().multiplyScalar(100).addScalar(50);
+        voxel.translateX( this.widthUnit / 2 );
+        voxel.translateY( this.depthUnit / 2 );
+        voxel.translateZ( this.heightUnit / 2 );
+        scene.add(voxel);
+    }
     
-    drawWall() {
-        var size = 100;
-        var x = 3; 
-        var y = 3;
+    
+    drawWalls() {
+        var w = game.pitWidth-2; 
+        var h = game.pitHeight-2;
+        var d = game.pitDepth-1;
         var color = new THREE.Color( color !== undefined ? color : 0x55aa55 );
         // grid
-        var wallGrid0 = new WallGrid(size, 3, 3, color);
+        var wallGrid0 = new WallGrid(w, h, this.widthUnit, this.heightUnit, color);
         scene.add(wallGrid0);
-        var wallGrid1 = new WallGrid(size, 10, 3, color);
+        var wallGrid1 = new WallGrid(w, d, this.widthUnit, this.depthUnit, color);
         wallGrid1.rotateX(-Math.PI / 2);
         scene.add(wallGrid1);
-        var wallGrid2 = new WallGrid(size, 10, 3, color);
-        wallGrid2.rotateX(-Math.PI / 2);
-        wallGrid2.rotateZ(-Math.PI / 2);
+        var wallGrid2 = new WallGrid(d, h, this.depthUnit, this.heightUnit, color);
+        wallGrid2.rotateZ(Math.PI / 2);
         scene.add(wallGrid2);
-        var wallGrid3 = new WallGrid(size, 10, 3, color);
+        var wallGrid3 = new WallGrid(w, d, this.widthUnit, this.depthUnit, color);
         wallGrid3.rotateX(-Math.PI / 2);
-        wallGrid3.translateY(-size * 3);
+        wallGrid3.translateY(-this.heightUnit * h);
         scene.add(wallGrid3);
-        var wallGrid4 = new WallGrid(size, 10, 3, color);
-        wallGrid4.rotateX(-Math.PI / 2);
-        wallGrid4.rotateZ(-Math.PI / 2);
-        wallGrid4.translateY(size * 3);
+        var wallGrid4 = new WallGrid(d, h, this.depthUnit, this.heightUnit, color);
+        wallGrid4.rotateZ(Math.PI / 2);
+        wallGrid4.translateY(-this.widthUnit * w);
         scene.add(wallGrid4);
     }
 
     adjustCameraPosition(camera) {
-        camera.position.set(this.widthUnit * 3/2, this.depthUnit * 15, this.heightUnit * 3/2);
+        camera.position.set(
+            this.widthUnit * (game.pitWidth-2)/2, 
+            this.depthUnit * (game.pitDepth+0) + 250, 
+            this.heightUnit * (game.pitHeight-2)/2
+        );
         camera.rotation.set(-Math.PI/2, 0, 0);
     }
 }
 
 ////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////
+//////////    HELPER FUNCTIONS    //////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////
 
-function WallGrid( size, x, y, color ) {
+function WallGrid( x, y, sizeX, sizeY, color ) {
 
-	size = size || 50;
+	sizeX = sizeX || 50;
+	sizeY = sizeY || 50;
 	divisionsX = x || 10;
 	divisionsY = y || 10;
 	color = new THREE.Color( color !== undefined ? color : 0x444444 );
 
-	lenX = size * divisionsX;
-	lenY = size * divisionsY;
-	centerX = divisionsX / 2;
-	centerY = divisionsY / 2;
-
+	lenX = sizeX * divisionsX;
+    lenY = sizeY * divisionsY;
 	var vertices = [], colors = [];
 
-	for ( var i = 0, j = 0, kx = 0, ky = 0; i <= Math.max(divisionsX, divisionsY); i ++, kx += size, ky += size ) {
+	for ( var i = 0, j = 0, kx = 0, ky = 0; i <= Math.max(divisionsX, divisionsY); i++, kx += sizeX, ky += sizeY ) {
 
-        if (i <= divisionsX) vertices.push( 0, 0, ky, lenY, 0, ky );
-		if (i <= divisionsY) vertices.push( kx, 0, 0, kx, 0, lenX );
+		if (i <= divisionsY) vertices.push( 0, 0, ky, lenX, 0, ky );
+        if (i <= divisionsX) vertices.push( kx, 0, 0, kx, 0, lenY );
 
+        // horizontal lines
         color.toArray( colors, j ); j += 3;
-		color.toArray( colors, j ); j += 3;
+        color.toArray( colors, j ); j += 3;
+        // vertical lines
 		color.toArray( colors, j ); j += 3;
 		color.toArray( colors, j ); j += 3;
 
@@ -130,3 +147,18 @@ WallGrid.prototype = Object.assign( Object.create( THREE.LineSegments.prototype 
 	}
 
 } );
+
+function drawLine(x1, y, z1, x2, y2, z2, _color) {
+    var material = new THREE.LineBasicMaterial({
+        color: _color
+    });
+    
+    var geometry = new THREE.Geometry();
+    geometry.vertices.push(
+        new THREE.Vector3( x1, y, z1 ),
+        new THREE.Vector3( x2, y2, z2 )
+    );
+    
+    var line = new THREE.Line( geometry, material );
+    scene.add( line );
+}
