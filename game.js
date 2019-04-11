@@ -17,6 +17,7 @@ class game {
         this.fillPit(w, h, d);
         this.activePiece;
         this.nextPiece;
+        console.log('new game!', this.pit);
     }
 
     start() {
@@ -173,7 +174,7 @@ class game {
         else {
             this.inactivatePiece();
             // this.gameSounds.touchDown();
-            // this.checkLines();
+            this.checkPlanes();
             this.spawnPiece();
         }
     }
@@ -184,8 +185,41 @@ class game {
         }
         this.inactivatePiece();
         // this.gameSounds.hardDrop();
-        // this.checkLines();
+        this.checkPlanes();
         this.spawnPiece();
+    }
+
+    checkPlanes() {
+        let completePlanes = 0;
+
+        for (let d = 1; d < this.pit.length; d++) {
+            let completePlane = true;
+            let plane = this.pit[d];
+            for (let h = 0; h < plane.length; h++) {
+                let completeLine = true;
+                let line = this.pit[d][h];
+                for (let w = 0; w < line.length; w++) {
+                    if(line[w] == 'A' || line[w] == '.') {
+                        completeLine = false;
+                    }
+                }
+                if (!completeLine) {
+                    completePlane = false;
+                }
+            }
+            if (completePlane) {
+                this.pit.splice(d,1);
+                this.pit.push(this.fillPlane(this.pitWidth, this.pitHeight));
+                completePlanes++;
+                drawGame.updatePit();
+            }
+        }
+
+        if (completePlanes > 0) {
+            // stats.addScore(completeLines, this.level);
+            // this.gameSounds.lineClear(completeLines);
+            // this.setGameSpeed(floor(stats.fullLines/10));
+        }
     }
 
 }

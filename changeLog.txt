@@ -17,6 +17,7 @@ Author: Muad
 9. Define Piece and spawn a simple piece
 10. Move piece
 11. Drop piece
+12. Check completed planes
 ##### END OF Task List ####
 
 

@@ -34,7 +34,7 @@ class drawGame {
                         // this.drawBlock(w, h, d)
                     }
                     if (game.pit[d][h][w] == 'B') {
-                        
+                        this.drawBlock(w, h, d);
                     }
                 }
             }
@@ -63,10 +63,11 @@ class drawGame {
         this.activePiece.translateX( this.widthUnit / 2 );
         this.activePiece.translateY( this.depthUnit / 2 );
         this.activePiece.translateZ( this.heightUnit / 2 );
+        this.activePiece.name = 'block';
         scene.add(this.activePiece);
     }
     // TODO support mmore than simple block pieces
-     updateActivePiece() {
+    updateActivePiece() {
         let w = game.activePiece.x;
         let d = game.activePiece.y;
         let h = game.activePiece.z;
@@ -74,9 +75,18 @@ class drawGame {
         this.activePiece.translateX( this.widthUnit / 2 );
         this.activePiece.translateY( this.depthUnit / 2 );
         this.activePiece.translateZ( this.heightUnit / 2 );
-     }
+    }
     
-    
+    updatePit() {
+        console.log('updatePit');
+        for (let i = scene.children.length-1; i >= 0 ; i--) {
+            if (scene.children[i].name == 'block') {
+                scene.remove(scene.children[i]);
+            }
+        }
+        this.drawPit();
+    }
+
     drawWalls() {
         var w = game.pitWidth-2; 
         var h = game.pitHeight-2;
