@@ -114,6 +114,19 @@ class game {
             let av = activeBlocks[i];
             this.pit[av.y][av.z][av.x] = 'A';
         }
+        drawGame.updateActivePiece();
+    }
+
+    inactivatePiece() {
+        for (let d = 0; d < this.pit.length; d++) {
+            let plane = this.pit[d];
+            for (let h = 0; h < plane.length; h++) {
+                let line = this.pit[d][h];
+                for (let w = 0; w < line.length; w++) {
+                    if(line[w] == 'A') line[w] = 'B';
+                }
+            }
+        }
     }
 
     moveLeft() {
@@ -123,7 +136,6 @@ class game {
         } else {
             // this.gameSounds.touchLR();
         }
-        drawGame.updateActivePiece();
     }
 
     moveRight() {
@@ -133,7 +145,6 @@ class game {
         } else {
             // this.gameSounds.touchLR();
         }
-        drawGame.updateActivePiece();
     }
 
     moveUp() {
@@ -143,7 +154,6 @@ class game {
         } else {
             // this.gameSounds.touchLR();
         }
-        drawGame.updateActivePiece();
     }
 
     moveDown() {
@@ -153,7 +163,29 @@ class game {
         } else {
             // this.gameSounds.touchLR();
         }
-        drawGame.updateActivePiece();
+    }
+
+    drop() {
+        if (this.activePiece.drop()) {
+            this.updateActivePiece();
+            // this.gameSounds.softDrop();
+        }
+        else {
+            this.inactivatePiece();
+            // this.gameSounds.touchDown();
+            // this.checkLines();
+            this.spawnPiece();
+        }
+    }
+
+    dropAll() {
+        while (this.activePiece.drop()) {
+            this.updateActivePiece();
+        }
+        this.inactivatePiece();
+        // this.gameSounds.hardDrop();
+        // this.checkLines();
+        this.spawnPiece();
     }
 
 }

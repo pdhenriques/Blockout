@@ -70,12 +70,13 @@ function onDocumentMouseUp(event) {
 }
 
 function onDocumentKeyDown(event) {
-    console.log(event.keyCode);
+    // console.log(event.keyCode);
     switch (event.keyCode) {
         case 37: game.moveLeft(); break;
         case 39: game.moveRight(); break;
         case 38: game.moveUp(); break;
         case 40: game.moveDown(); break;
+        case 32: game.dropAll(); break;
     }
 }
 

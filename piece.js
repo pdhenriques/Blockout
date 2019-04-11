@@ -133,12 +133,12 @@ class piece {
         for(let i=0; i<this.blocks.length; i++) {
             let ix = this.blocks[i].x;
             let iy = this.blocks[i].y;
-            if (game.pit[iy+1][ix] == 'W' || game.pit[iy+1][ix] == 'B') {
-                // console.log('hit the ' + game.pit[iy+1][ix]);
+            let iz = this.blocks[i].z;
+            if (game.pit[iy-1][iz][ix] == 'W' || game.pit[iy-1][iz][ix] == 'B') {
                 return false;
             }
         }
-        this.y += 1;
+        this.y -= 1;
         this.updateBlock();
         return true;
     }

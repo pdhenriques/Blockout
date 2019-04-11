@@ -16,6 +16,7 @@ Author: Muad
 8. Define coord system and adust Camera position
 9. Define Piece and spawn a simple piece
 10. Move piece
+11. Drop piece
 ##### END OF Task List ####
 
 

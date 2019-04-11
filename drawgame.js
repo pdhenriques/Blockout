@@ -52,6 +52,7 @@ class drawGame {
         scene.add(voxel);
     }
     
+    // TODO support mmore than simple block pieces
     createActivePiece(p) {
         console.log('####');
         let w = p.x;
@@ -64,6 +65,7 @@ class drawGame {
         this.activePiece.translateZ( this.heightUnit / 2 );
         scene.add(this.activePiece);
     }
+    // TODO support mmore than simple block pieces
      updateActivePiece() {
         let w = game.activePiece.x;
         let d = game.activePiece.y;
