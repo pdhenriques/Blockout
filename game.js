@@ -84,6 +84,7 @@ class game {
     spawnPiece() {
         this.activePiece = this.nextPiece;
         this.spawnNextPiece();
+        drawGame.createActivePiece(this.activePiece);
         // if (this.checkGameOver()) {
         //     console.log('gameover!');
         //     this.stop();
@@ -113,6 +114,46 @@ class game {
             let av = activeBlocks[i];
             this.pit[av.y][av.z][av.x] = 'A';
         }
+    }
+
+    moveLeft() {
+        if (this.activePiece.moveLeft()) {
+            this.updateActivePiece();
+            // this.gameSounds.moveLR();
+        } else {
+            // this.gameSounds.touchLR();
+        }
+        drawGame.updateActivePiece();
+    }
+
+    moveRight() {
+        if (this.activePiece.moveRight()) {
+            this.updateActivePiece();
+            // this.gameSounds.moveLR();
+        } else {
+            // this.gameSounds.touchLR();
+        }
+        drawGame.updateActivePiece();
+    }
+
+    moveUp() {
+        if (this.activePiece.moveUp()) {
+            this.updateActivePiece();
+            // this.gameSounds.moveLR();
+        } else {
+            // this.gameSounds.touchLR();
+        }
+        drawGame.updateActivePiece();
+    }
+
+    moveDown() {
+        if (this.activePiece.moveDown()) {
+            this.updateActivePiece();
+            // this.gameSounds.moveLR();
+        } else {
+            // this.gameSounds.touchLR();
+        }
+        drawGame.updateActivePiece();
     }
 
 }

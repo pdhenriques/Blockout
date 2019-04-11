@@ -1,5 +1,6 @@
 class piece {
     constructor(x, y, z, r, t) {
+        console.log('New Piece Constructed...')
         this.x = x;
         this.y = y;
         this.z = z;
@@ -22,8 +23,8 @@ class piece {
         for(let i=0; i<this.blocks.length; i++) {
             let ix = this.blocks[i].x;
             let iy = this.blocks[i].y;
-            if (game.pit[iy][ix-1] == 'W' || game.pit[iy][ix-1] == 'B') {
-                // console.log('hit the ' + game.pit[iy][ix-1]);
+            let iz = this.blocks[i].z;
+            if (game.pit[iy][iz][ix-1] == 'W' || game.pit[iy][iz][ix-1] == 'B') {
                 return false;
             }
         }
@@ -36,12 +37,40 @@ class piece {
         for(let i=0; i<this.blocks.length; i++) {
             let ix = this.blocks[i].x;
             let iy = this.blocks[i].y;
-            if (game.pit[iy][ix+1] == 'W' || game.pit[iy][ix+1] == 'B') {
-                // console.log('hit the ' + game.pit[iy][ix+1]);
+            let iz = this.blocks[i].z;
+            if (game.pit[iy][iz][ix+1] == 'W' || game.pit[iy][iz][ix+1] == 'B') {
                 return false;
             }
         }
         this.x += 1;
+        this.updateBlock();
+        return true;
+    }
+
+    moveUp() {
+        for(let i=0; i<this.blocks.length; i++) {
+            let ix = this.blocks[i].x;
+            let iy = this.blocks[i].y;
+            let iz = this.blocks[i].z;
+            if (game.pit[iy][iz-1][ix] == 'W' || game.pit[iy][iz-1][ix] == 'B') {
+                return false;
+            }
+        }
+        this.z -= 1;
+        this.updateBlock();
+        return true;
+    }
+
+    moveDown() {
+        for(let i=0; i<this.blocks.length; i++) {
+            let ix = this.blocks[i].x;
+            let iy = this.blocks[i].y;
+            let iz = this.blocks[i].z;
+            if (game.pit[iy][iz+1][ix] == 'W' || game.pit[iy][iz+1][ix] == 'B') {
+                return false;
+            }
+        }
+        this.z += 1;
         this.updateBlock();
         return true;
     }

@@ -15,6 +15,7 @@ Author: Muad
 7. Draw Pit walls in thin lines
 8. Define coord system and adust Camera position
 9. Define Piece and spawn a simple piece
+10. Move piece
 ##### END OF Task List ####
 
 

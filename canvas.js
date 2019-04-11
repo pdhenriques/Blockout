@@ -3,6 +3,7 @@ if (WEBGL.isWebGLAvailable() === false) {
     document.body.appendChild(WEBGL.getWebGLErrorMessage());
 }
 
+var stats
 var camera, scene, renderer;
 var mouse, raycaster, plane;
 var isShiftDown = false;
@@ -14,6 +15,10 @@ animate();
 
 function init() {
 
+    stats = new Stats();
+    stats.showPanel( 0 ); // 0: fps, 1: ms, 2: mb, 3+: custom
+    document.body.appendChild( stats.dom );
+    
     camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 10000);
 
     scene = new THREE.Scene();
@@ -37,8 +42,8 @@ function init() {
     drawLine(0, 0,-1000,  0, 0, 1000, 0x0000ff);
 
     game = new game(5, 5, 15);
-    game.start();
     drawGame = new drawGame(100, 100, 100);
+    game.start();
     
     controls();
 }
@@ -65,8 +70,12 @@ function onDocumentMouseUp(event) {
 }
 
 function onDocumentKeyDown(event) {
+    console.log(event.keyCode);
     switch (event.keyCode) {
-        case 16: isShiftDown = true; break;
+        case 37: game.moveLeft(); break;
+        case 39: game.moveRight(); break;
+        case 38: game.moveUp(); break;
+        case 40: game.moveDown(); break;
     }
 }
 
@@ -77,9 +86,18 @@ function onDocumentKeyUp(event) {
 }
 
 function animate() {
-    requestAnimationFrame( animate );
+    setTimeout( function() {
+        
+        requestAnimationFrame( animate );
+        
+    }, 1000 / 25 );
+    
+    stats.begin();
+    // renderer.render();
+    // drawGame.drawPit();
     // controls.update(); // only required if controls.enableDamping = true, or if controls.autoRotate = true
     render();
+	stats.end();
 }
 
 function render() {

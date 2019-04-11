@@ -11,6 +11,8 @@ class drawGame {
         this.blockGeo = new THREE.BoxBufferGeometry(this.widthUnit, this.depthUnit, this.heightUnit);
         this.blockMaterial = new THREE.MeshLambertMaterial({ color: 0x55aaaa, opacity: 0.3, transparent: true });
 
+        // active piece
+        this.activePiece;
 
         this.adjustCameraPosition(camera);
         this.drawWalls();
@@ -29,7 +31,7 @@ class drawGame {
                         // this.drawBlock(w, h, d)
                     }
                     if (game.pit[d][h][w] == 'A') {
-                        this.drawBlock(w, h, d)
+                        // this.drawBlock(w, h, d)
                     }
                     if (game.pit[d][h][w] == 'B') {
                         
@@ -49,6 +51,28 @@ class drawGame {
         voxel.translateZ( this.heightUnit / 2 );
         scene.add(voxel);
     }
+    
+    createActivePiece(p) {
+        console.log('####');
+        let w = p.x;
+        let d = p.y;
+        let h = p.z;
+        this.activePiece = new THREE.Mesh(this.blockGeo, this.blockMaterial);
+        this.activePiece.position.set((w-1) * this.widthUnit, (d-1) * this.depthUnit, (h-1) * this.heightUnit);
+        this.activePiece.translateX( this.widthUnit / 2 );
+        this.activePiece.translateY( this.depthUnit / 2 );
+        this.activePiece.translateZ( this.heightUnit / 2 );
+        scene.add(this.activePiece);
+    }
+     updateActivePiece() {
+        let w = game.activePiece.x;
+        let d = game.activePiece.y;
+        let h = game.activePiece.z;
+        this.activePiece.position.set((w-1) * this.widthUnit, (d-1) * this.depthUnit, (h-1) * this.heightUnit);
+        this.activePiece.translateX( this.widthUnit / 2 );
+        this.activePiece.translateY( this.depthUnit / 2 );
+        this.activePiece.translateZ( this.heightUnit / 2 );
+     }
     
     
     drawWalls() {
