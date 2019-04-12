@@ -85,7 +85,7 @@ class game {
     spawnPiece() {
         this.activePiece = this.nextPiece;
         this.spawnNextPiece();
-        drawGame.createActivePiece(this.activePiece);
+        // drawGame.createActivePiece(this.activePiece);
         // if (this.checkGameOver()) {
         //     console.log('gameover!');
         //     this.stop();
@@ -96,7 +96,7 @@ class game {
 
     spawnNextPiece() {
         let p = Math.floor(Math.random()*8);
-        this.nextPiece = new piece(1,14,3,0,p);
+        this.nextPiece = new piece(1,14,1,0,p);
     }
 
     updateActivePiece() {
@@ -115,7 +115,7 @@ class game {
             let av = activeBlocks[i];
             this.pit[av.y][av.z][av.x] = 'A';
         }
-        drawGame.updateActivePiece();
+        // drawGame.updateActivePiece();
     }
 
     inactivatePiece() {
@@ -131,7 +131,7 @@ class game {
     }
 
     moveLeft() {
-        if (this.activePiece.moveLeft()) {
+        if (this.activePiece.move(-1,0,0)) {
             this.updateActivePiece();
             // this.gameSounds.moveLR();
         } else {
@@ -140,7 +140,7 @@ class game {
     }
 
     moveRight() {
-        if (this.activePiece.moveRight()) {
+        if (this.activePiece.move(1,0,0)) {
             this.updateActivePiece();
             // this.gameSounds.moveLR();
         } else {
@@ -149,7 +149,7 @@ class game {
     }
 
     moveUp() {
-        if (this.activePiece.moveUp()) {
+        if (this.activePiece.move(0,0,-1)) {
             this.updateActivePiece();
             // this.gameSounds.moveLR();
         } else {
@@ -158,7 +158,16 @@ class game {
     }
 
     moveDown() {
-        if (this.activePiece.moveDown()) {
+        if (this.activePiece.move(0,0,1)) {
+            this.updateActivePiece();
+            // this.gameSounds.moveLR();
+        } else {
+            // this.gameSounds.touchLR();
+        }
+    }
+
+    rotate(x, y, z) {
+        if (this.activePiece.rotate(x, y, z)) {
             this.updateActivePiece();
             // this.gameSounds.moveLR();
         } else {
@@ -167,7 +176,7 @@ class game {
     }
 
     drop() {
-        if (this.activePiece.drop()) {
+        if (this.activePiece.move(0,-1,0)) {
             this.updateActivePiece();
             // this.gameSounds.softDrop();
         }
@@ -180,7 +189,7 @@ class game {
     }
 
     dropAll() {
-        while (this.activePiece.drop()) {
+        while (this.activePiece.move(0,-1,0)) {
             this.updateActivePiece();
         }
         this.inactivatePiece();

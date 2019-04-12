@@ -19,6 +19,7 @@ Author: Muad
 11. Drop piece
 12. Check completed planes
 13. Added support for multi-block pieces
+14. Piece rotation and refactor movement
 ##### END OF Task List ####
 
 

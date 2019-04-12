@@ -77,6 +77,10 @@ function onDocumentKeyDown(event) {
         case 38: game.moveUp(); break;
         case 40: game.moveDown(); break;
         case 32: game.dropAll(); break;
+        case 81: game.rotate(1, 0, 0); break;
+        case 87: game.rotate(0, 0, 1); break;
+        case 69: game.rotate(0, 1, 0); break;
+
     }
 }
 
@@ -95,7 +99,7 @@ function animate() {
     
     stats.begin();
     // renderer.render();
-    // drawGame.drawPit();
+    drawGame.updatePit();
     // controls.update(); // only required if controls.enableDamping = true, or if controls.autoRotate = true
     render();
 	stats.end();

@@ -31,7 +31,7 @@ class drawGame {
                         // this.createBlock(w, h, d)
                     }
                     if (game.pit[d][h][w] == 'A') {
-                        // this.createBlock(w, h, d)
+                        this.createBlock(w, h, d)
                     }
                     if (game.pit[d][h][w] == 'B') {
                         this.createBlock(w, h, d);
@@ -74,7 +74,7 @@ class drawGame {
     }
 
     updateActivePiece() {
-
+        console.log('# updateActivePiece');
         for(let i=0; i<game.activePiece.blocks.length; i++) {
             let w = game.activePiece.blocks[i].x;
             let d = game.activePiece.blocks[i].y;
@@ -85,7 +85,7 @@ class drawGame {
     }
 
     updatePit() {
-        console.log('updatePit');
+        // console.log('updatePit');
         for (let i = scene.children.length-1; i >= 0 ; i--) {
             if (scene.children[i].name == 'block') {
                 scene.remove(scene.children[i]);
