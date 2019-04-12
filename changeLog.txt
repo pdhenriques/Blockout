@@ -20,11 +20,12 @@ Author: Muad
 12. Check completed planes
 13. Added support for multi-block pieces
 14. Piece rotation and refactor movement
+15. Prevent rotation out-of-borders
 ##### END OF Task List ####
 
 
 .: Default Empty Project
-- P5js libraries
+- P5.js/THREE.js libraries
 - GameSpark libraries
 - default index.html
 - default style.css

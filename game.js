@@ -96,7 +96,7 @@ class game {
 
     spawnNextPiece() {
         let p = Math.floor(Math.random()*8);
-        this.nextPiece = new piece(1,14,1,0,p);
+        this.nextPiece = new piece(1,13,1,p);
     }
 
     updateActivePiece() {
