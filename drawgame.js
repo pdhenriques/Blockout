@@ -12,7 +12,7 @@ class drawGame {
         this.blockMaterial = new THREE.MeshLambertMaterial({ color: 0x55aaaa, opacity: 0.3, transparent: true });
 
         // active piece
-        this.activePiece;
+        this.activePiece = [];
 
         this.adjustCameraPosition(camera);
         this.drawWalls();
@@ -28,20 +28,20 @@ class drawGame {
                 let line = game.pit[d][h];
                 for (let w = 0; w < line.length; w++) {
                     if (game.pit[d][h][w] == 'W') {
-                        // this.drawBlock(w, h, d)
+                        // this.createBlock(w, h, d)
                     }
                     if (game.pit[d][h][w] == 'A') {
-                        // this.drawBlock(w, h, d)
+                        // this.createBlock(w, h, d)
                     }
                     if (game.pit[d][h][w] == 'B') {
-                        this.drawBlock(w, h, d);
+                        this.createBlock(w, h, d);
                     }
                 }
             }
         }
     }
 
-    drawBlock(w, h, d) {
+    createBlock(w, h, d) {
         var voxel = new THREE.Mesh(this.blockGeo, this.blockMaterial);
         voxel.position.set((w-1) * this.widthUnit, (d-1) * this.depthUnit, (h-1) * this.heightUnit);
         // snaping thingy
@@ -49,34 +49,41 @@ class drawGame {
         voxel.translateX( this.widthUnit / 2 );
         voxel.translateY( this.depthUnit / 2 );
         voxel.translateZ( this.heightUnit / 2 );
+        voxel.name = 'block';
         scene.add(voxel);
+        return voxel;
     }
     
-    // TODO support mmore than simple block pieces
+    updateBlock(b, w, d, h) {
+        b.position.set((w-1) * this.widthUnit, (d-1) * this.depthUnit, (h-1) * this.heightUnit);
+        b.translateX( this.widthUnit / 2 );
+        b.translateY( this.depthUnit / 2 );
+        b.translateZ( this.heightUnit / 2 );
+    }
+    
     createActivePiece(p) {
-        console.log('####');
-        let w = p.x;
-        let d = p.y;
-        let h = p.z;
-        this.activePiece = new THREE.Mesh(this.blockGeo, this.blockMaterial);
-        this.activePiece.position.set((w-1) * this.widthUnit, (d-1) * this.depthUnit, (h-1) * this.heightUnit);
-        this.activePiece.translateX( this.widthUnit / 2 );
-        this.activePiece.translateY( this.depthUnit / 2 );
-        this.activePiece.translateZ( this.heightUnit / 2 );
-        this.activePiece.name = 'block';
-        scene.add(this.activePiece);
+        console.log('# new block mesh');
+        this.activePiece = [];
+        for(let i=0; i<p.blocks.length; i++) {
+            let w = p.blocks[i].x;
+            let d = p.blocks[i].y;
+            let h = p.blocks[i].z;
+            let blk = this.createBlock(w, d, h);
+            this.activePiece.push(blk);
+        }
     }
-    // TODO support mmore than simple block pieces
+
     updateActivePiece() {
-        let w = game.activePiece.x;
-        let d = game.activePiece.y;
-        let h = game.activePiece.z;
-        this.activePiece.position.set((w-1) * this.widthUnit, (d-1) * this.depthUnit, (h-1) * this.heightUnit);
-        this.activePiece.translateX( this.widthUnit / 2 );
-        this.activePiece.translateY( this.depthUnit / 2 );
-        this.activePiece.translateZ( this.heightUnit / 2 );
+
+        for(let i=0; i<game.activePiece.blocks.length; i++) {
+            let w = game.activePiece.blocks[i].x;
+            let d = game.activePiece.blocks[i].y;
+            let h = game.activePiece.blocks[i].z;
+            let blk = this.updateBlock(this.activePiece[i], w, d, h);
+            
+        }
     }
-    
+
     updatePit() {
         console.log('updatePit');
         for (let i = scene.children.length-1; i >= 0 ; i--) {

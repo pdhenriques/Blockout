@@ -95,7 +95,7 @@ class game {
     }
 
     spawnNextPiece() {
-        let p = Math.floor(Math.random(7));
+        let p = Math.floor(Math.random()*8);
         this.nextPiece = new piece(1,14,3,0,p);
     }
 
@@ -208,6 +208,7 @@ class game {
                 }
             }
             if (completePlane) {
+                console.log('### PLANE COMPLETED!!');
                 this.pit.splice(d,1);
                 this.pit.push(this.fillPlane(this.pitWidth, this.pitHeight));
                 completePlanes++;

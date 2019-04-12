@@ -14,10 +14,11 @@ Author: Muad
 6. Draw thick lines in Three.JS (failed)
 7. Draw Pit walls in thin lines
 8. Define coord system and adust Camera position
-9. Define Piece and spawn a simple piece
+9. Define Piece and spawn a single-block piece
 10. Move piece
 11. Drop piece
 12. Check completed planes
+13. Added support for multi-block pieces
 ##### END OF Task List ####
 
 

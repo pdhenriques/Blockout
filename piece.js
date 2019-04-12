@@ -175,36 +175,68 @@ class piece {
     }
 
     createBlock(t,r) {
-        let b0 = new THREE.Vector3( this.x, this.y, this.z );
-        // let b1 = new THREE.Vector3( this.x+1, this.y, this.z );
-        // let b2 = new THREE.Vector3( this.x, this.y-1, this.z );
-        return [b0];
+        console.log('createBlock');
+        let b0, b1, b2, b3;
+        switch (t) {
+            case 0: // single
+                console.log('createBlock: single');
+                b0 = new THREE.Vector3( this.x, this.y, this.z );
+                return [b0];
+                break;
+            case 1: // double
+                console.log('createBlock: double');
+                b0 = new THREE.Vector3( this.x, this.y, this.z );
+                b1 = new THREE.Vector3( this.x, this.y, this.z-1 );
+                return [b0, b1];
+                break;
+            case 2: // corner
+                console.log('createBlock: corner');
+                b0 = new THREE.Vector3( this.x, this.y, this.z );
+                b1 = new THREE.Vector3( this.x, this.y, this.z-1 );
+                b2 = new THREE.Vector3( this.x+1, this.y, this.z );
+                return [b0, b1, b2];
+                break;
+            case 3: // square
+                console.log('createBlock: square');
+                b0 = new THREE.Vector3( this.x, this.y, this.z );
+                b1 = new THREE.Vector3( this.x, this.y, this.z-1 );
+                b2 = new THREE.Vector3( this.x+1, this.y, this.z );
+                b3 = new THREE.Vector3( this.x+1, this.y, this.z-1 );
+                return [b0, b1, b2, b3];
+                break;
+            case 4: // n
+                console.log('createBlock: n');
+                b0 = new THREE.Vector3( this.x, this.y, this.z );
+                b1 = new THREE.Vector3( this.x, this.y, this.z-1 );
+                b2 = new THREE.Vector3( this.x+1, this.y, this.z-1 );
+                b3 = new THREE.Vector3( this.x+1, this.y, this.z-2 );
+                return [b0, b1, b2, b3];
+                break;
+            case 5: // t
+                console.log('createBlock: t');
+                b0 = new THREE.Vector3( this.x, this.y, this.z );
+                b1 = new THREE.Vector3( this.x, this.y, this.z-1 );
+                b2 = new THREE.Vector3( this.x, this.y, this.z-2 );
+                b3 = new THREE.Vector3( this.x+1, this.y, this.z-1 );
+                return [b0, b1, b2, b3];
+                break;
+            case 6: // l
+                console.log('createBlock: l');
+                b0 = new THREE.Vector3( this.x, this.y, this.z );
+                b1 = new THREE.Vector3( this.x, this.y, this.z-1 );
+                b2 = new THREE.Vector3( this.x, this.y, this.z-2 );
+                b3 = new THREE.Vector3( this.x+1, this.y, this.z );
+                return [b0, b1, b2, b3];
+                break;
+            case 7: // line
+                console.log('createBlock: line');
+                b0 = new THREE.Vector3( this.x, this.y, this.z );
+                b1 = new THREE.Vector3( this.x, this.y, this.z-1 );
+                b2 = new THREE.Vector3( this.x, this.y, this.z-2 );
+                return [b0, b1, b2];
+                break;
+        }
+        return [];
     }
-
-    // function(t) {
-    //     switch (t) {
-    //         case 0: // cube
-    //             this.w = 2;
-    //             break;
-    //         case 1: // n1
-    //             this.w = 2;
-    //             break;
-    //         case 2: // n2
-    //             this.w = 2;
-    //             break;
-    //         case 3: // t
-    //             this.w = 2;
-    //             break;
-    //         case 4: // l1
-    //             this.w = 2;
-    //             break;
-    //         case 5: // l2
-    //             this.w = 2;
-    //             break;
-    //         case 6: // line
-    //             this.w = 1;
-    //             break;
-    //     }
-    // }
 
 }
