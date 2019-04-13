@@ -117,7 +117,7 @@ class piece {
     }
 
     forceRotate(x, y, z) {
-        console.log('rotate:', x, y, z);
+        // console.log('rotate:', x, y, z);
         let axis = new THREE.Vector3( x, y, -z );
         for(let i=0; i<this.blocks.length; i++) {
             this.blocks[i].sub(this.pivot);
@@ -129,29 +129,29 @@ class piece {
     }
 
     createBlock(t) {
-        console.log('createBlock');
+        // console.log('createBlock');
         let b0, b1, b2, b3;
         switch (t) {
             case 0: // single
-                console.log('createBlock: single');
+                // console.log('createBlock: single');
                 b0 = new THREE.Vector3( this.x, this.y, this.z );
                 return [b0];
                 break;
             case 1: // double
-                console.log('createBlock: double');
+                // console.log('createBlock: double');
                 b0 = new THREE.Vector3( this.x, this.y, this.z );
                 b1 = new THREE.Vector3( this.x, this.y, this.z+1 );
                 return [b0, b1];
                 break;
             case 2: // corner
-                console.log('createBlock: corner');
+                // console.log('createBlock: corner');
                 b0 = new THREE.Vector3( this.x, this.y, this.z );
                 b1 = new THREE.Vector3( this.x, this.y, this.z+1 );
                 b2 = new THREE.Vector3( this.x+1, this.y, this.z );
                 return [b0, b1, b2];
                 break;
             case 3: // square
-                console.log('createBlock: square');
+                // console.log('createBlock: square');
                 b0 = new THREE.Vector3( this.x, this.y, this.z );
                 b1 = new THREE.Vector3( this.x, this.y, this.z+1 );
                 b2 = new THREE.Vector3( this.x+1, this.y, this.z );
@@ -159,7 +159,7 @@ class piece {
                 return [b0, b1, b2, b3];
                 break;
             case 4: // n
-                console.log('createBlock: n');
+                // console.log('createBlock: n');
                 b0 = new THREE.Vector3( this.x, this.y, this.z );
                 b1 = new THREE.Vector3( this.x+1, this.y, this.z );
                 b2 = new THREE.Vector3( this.x+1, this.y, this.z+1 );
@@ -167,7 +167,7 @@ class piece {
                 return [b0, b1, b2, b3];
                 break;
             case 5: // t
-                console.log('createBlock: t');
+                // console.log('createBlock: t');
                 b0 = new THREE.Vector3( this.x, this.y, this.z );
                 b1 = new THREE.Vector3( this.x, this.y, this.z+1 );
                 b2 = new THREE.Vector3( this.x, this.y, this.z+2 );
@@ -175,7 +175,7 @@ class piece {
                 return [b0, b1, b2, b3];
                 break;
             case 6: // l
-                console.log('createBlock: l');
+                // console.log('createBlock: l');
                 b0 = new THREE.Vector3( this.x, this.y, this.z );
                 b1 = new THREE.Vector3( this.x, this.y, this.z+1 );
                 b2 = new THREE.Vector3( this.x, this.y, this.z+2 );
@@ -183,7 +183,7 @@ class piece {
                 return [b0, b1, b2, b3];
                 break;
             case 7: // line
-                console.log('createBlock: line');
+                // console.log('createBlock: line');
                 b0 = new THREE.Vector3( this.x, this.y, this.z );
                 b1 = new THREE.Vector3( this.x, this.y, this.z+1 );
                 b2 = new THREE.Vector3( this.x, this.y, this.z+2 );
@@ -194,7 +194,7 @@ class piece {
     }
 
     createPivot(t) {
-        console.log('createPivot');
+        // console.log('createPivot');
         let px,py,pz;
         switch (t) {
             case 0: // single

@@ -21,6 +21,8 @@ Author: Muad
 13. Added support for multi-block pieces
 14. Piece rotation and refactor movement
 15. Prevent rotation out-of-borders
+16. GameState - Start, run, over, pause
+17. Backend integration
 ##### END OF Task List ####
 
 

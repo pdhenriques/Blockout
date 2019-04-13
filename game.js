@@ -31,6 +31,18 @@ class game {
     stop() {
         console.log('over');
         this.state = 'over';
+        drawUI.gameOver();
+    }
+
+    togglePause() {
+        // console.log('pause');
+        if (this.state == 'run') {
+            this.state = 'pause';
+            drawUI.pause();
+        } else if (this.state == 'pause') {
+            this.state = 'run';
+            drawUI.unPause();
+        }
     }
 
     fillPit(x, y, z) {
@@ -86,17 +98,30 @@ class game {
         this.activePiece = this.nextPiece;
         this.spawnNextPiece();
         // drawGame.createActivePiece(this.activePiece);
-        // if (this.checkGameOver()) {
-        //     console.log('gameover!');
-        //     this.stop();
-        //     return;
-        // } 
+        if (this.checkGameOver()) {
+            console.log('gameover!');
+            this.stop();
+            return;
+        } 
         this.updateActivePiece();
     }
 
     spawnNextPiece() {
         let p = Math.floor(Math.random()*8);
         this.nextPiece = new piece(1,13,1,p);
+    }
+
+    checkGameOver() {
+        let newPiece = this.activePiece.getBlocks();
+        for(let i=0; i<newPiece.length; i++) {
+            let ix = newPiece[i].x;
+            let iy = newPiece[i].y;
+            let iz = newPiece[i].z;
+            if (this.pit[iy][iz][ix] == 'B') {
+                return true;
+            }
+        }
+        return false;
     }
 
     updateActivePiece() {

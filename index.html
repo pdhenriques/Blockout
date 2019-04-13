@@ -11,14 +11,41 @@
     <script src="libraries/OrbitControls.js"></script>
     <script src="//mrdoob.github.io/stats.js/build/stats.min.js"></script>
 
+    <script type="text/javascript" src="libraries/gamesparks-rt.js"></script>
+    <script type="text/javascript" src="libraries/gamesparks.js"></script>
+    <script type="text/javascript" src="libraries/gamesparks-functions.js"></script>
+    <script type="text/javascript" src="libraries/hmac-sha256.js"></script>
+    <script type="text/javascript" src="backend.js"></script>
+  
     <script type="text/javascript" src="piece.js"></script>
     <script type="text/javascript" src="game.js"></script>
     <script type="text/javascript" src="drawgame.js"></script>
+    <script type="text/javascript" src="drawUI.js"></script>
     <link rel="stylesheet" type="text/css" media="screen" href="style.css">
 </head>
 
 <body>
 
+    <form id="nameForm" action="javascript:void(0);" style="display:block">
+        <h1>Welcome to my<br>database</h1>
+        <div class="question">
+            <input type="text" id="playerName" required />
+            <label>Your Name</label>
+        </div>
+        <button onclick="javascript:checkName()">Go!</button>
+    </form>
+    <form id="stateStart" action="javascript:void(0);" style="display:none">
+        <h1>Are you ready?</h1>
+        <button onclick="javascript:drawUI.start()">Start!</button>
+    </form>
+    <form id="stateOver" action="javascript:void(0);" style="display:none">
+        <h1>You can do better... try again?</h1>
+        <button onclick="javascript:drawUI.start()">Shush.. Go!</button>
+    </form>
+    <form id="statePause" action="javascript:void(0);" style="display:none">
+        <h1>Zzzz...</h1>
+        <button onclick="javascript:drawUI.unPause()">Go!</button>
+    </form>
 </body>
 
 <script type="text/javascript" src="canvas.js"></script>

@@ -9,7 +9,7 @@ class drawGame {
 
         // block
         this.blockGeo = new THREE.BoxBufferGeometry(this.widthUnit, this.depthUnit, this.heightUnit);
-        this.blockMaterial = new THREE.MeshLambertMaterial({ color: 0x55aaaa, opacity: 0.3, transparent: true });
+        this.blockMaterial = new THREE.MeshLambertMaterial({ color: 0x55aaaa, opacity: 0.2, transparent: true });
 
         // active piece
         this.activePiece = [];
@@ -62,7 +62,6 @@ class drawGame {
     }
     
     createActivePiece(p) {
-        console.log('# new block mesh');
         this.activePiece = [];
         for(let i=0; i<p.blocks.length; i++) {
             let w = p.blocks[i].x;
@@ -74,7 +73,6 @@ class drawGame {
     }
 
     updateActivePiece() {
-        console.log('# updateActivePiece');
         for(let i=0; i<game.activePiece.blocks.length; i++) {
             let w = game.activePiece.blocks[i].x;
             let d = game.activePiece.blocks[i].y;

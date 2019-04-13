@@ -37,76 +37,30 @@ function init() {
     document.body.appendChild(renderer.domElement);
     window.addEventListener('resize', onWindowResize, false);
 
-    drawLine(-1000, 0, 0, 1000, 0, 0, 0xff0000);
-    drawLine(0, -1000, 0, 0, 1000,  0, 0xffff00);
-    drawLine(0, 0,-1000,  0, 0, 1000, 0x0000ff);
+    // drawLine(-1000, 0, 0, 1000, 0, 0, 0xff0000);
+    // drawLine(0, -1000, 0, 0, 1000,  0, 0xffff00);
+    // drawLine(0, 0,-1000,  0, 0, 1000, 0x0000ff);
 
     game = new game(5, 5, 15);
+    BEinit();
     drawGame = new drawGame(100, 100, 100);
-    game.start();
+    drawUI = new drawUI();
     
     controls();
 }
 
-function onWindowResize() {
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight);
-}
-
-function onDocumentMouseMove(event) {
-    event.preventDefault();
-
-}
-
-function onDocumentMouseDown(event) {
-    event.preventDefault();
-
-}
-
-function onDocumentMouseUp(event) {
-    event.preventDefault();
-    // drawGame.adjustCameraPosition(camera);
-}
-
-function onDocumentKeyDown(event) {
-    // console.log(event.keyCode);
-    switch (event.keyCode) {
-        case 37: game.moveLeft(); break;
-        case 39: game.moveRight(); break;
-        case 38: game.moveUp(); break;
-        case 40: game.moveDown(); break;
-        case 32: game.dropAll(); break;
-        case 81: game.rotate(1, 0, 0); break;
-        case 87: game.rotate(0, 0, 1); break;
-        case 69: game.rotate(0, 1, 0); break;
-
-    }
-}
-
-function onDocumentKeyUp(event) {
-    switch (event.keyCode) {
-        case 16: isShiftDown = false; break;
-    }
-}
-
-function animate() {
-    setTimeout( function() {
-        
-        requestAnimationFrame( animate );
-        
-    }, 1000 / 25 );
+function gameFrame() {
     
-    stats.begin();
-    // renderer.render();
-    drawGame.updatePit();
-    // controls.update(); // only required if controls.enableDamping = true, or if controls.autoRotate = true
-    render();
-	stats.end();
-}
+    if (game.state == 'run') {
+        drawGame.updatePit();
+    } else if (game.state == 'start') {
+        
+    } else if (game.state == 'over') {
+        
+    } else if (game.state == 'pause') {
+        
+    }
 
-function render() {
-    renderer.render(scene, camera);
 }
 
 function controls() {
@@ -126,4 +80,72 @@ function controls() {
     controls.maxPolarAngle = Math.PI / 2;
     controls.target.set(150, 500, 150);
     drawGame.adjustCameraPosition(camera);
+}
+
+function onDocumentMouseMove(event) {
+    if (game.state == 'run') {
+        event.preventDefault();
+    }
+}
+
+function onDocumentMouseDown(event) {
+    if (game.state == 'run') {
+        event.preventDefault();
+    }
+}
+
+function onDocumentMouseUp(event) {
+    if (game.state == 'run') {
+        event.preventDefault();
+        drawGame.adjustCameraPosition(camera);
+    }
+}
+
+function onDocumentKeyDown(event) {
+    // console.log(event.keyCode);
+    switch (event.keyCode) {
+        case 37: game.moveLeft(); break;
+        case 39: game.moveRight(); break;
+        case 38: game.moveUp(); break;
+        case 40: game.moveDown(); break;
+        case 32: game.dropAll(); break;
+        case 81: game.rotate(1, 0, 0); break;
+        case 87: game.rotate(0, 0, 1); break;
+        case 69: game.rotate(0, 1, 0); break;
+        case 65: game.rotate(-1, 0, 0); break;
+        case 83: game.rotate(0, 0, -1); break;
+        case 68: game.rotate(0, -1, 0); break;
+        case 80: game.togglePause(); break;
+    }
+}
+
+function onDocumentKeyUp(event) {
+    switch (event.keyCode) {
+        case 16: isShiftDown = false; break;
+    }
+}
+
+function animate() {
+    setTimeout( function() {
+        
+        requestAnimationFrame( animate );
+        
+    }, 1000 / 25 );
+    
+    stats.begin();
+    // renderer.render();
+    gameFrame();
+    // controls.update(); // only required if controls.enableDamping = true, or if controls.autoRotate = true
+    render();
+	stats.end();
+}
+
+function render() {
+    renderer.render(scene, camera);
+}
+
+function onWindowResize() {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
 }
