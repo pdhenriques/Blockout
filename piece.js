@@ -1,6 +1,6 @@
 class piece {
     constructor(x, y, z, t) {
-        console.log('New Piece Constructed...')
+        // console.log('New Piece Constructed...')
         this.x = x;
         this.y = y;
         this.z = z;

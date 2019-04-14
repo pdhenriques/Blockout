@@ -10,14 +10,14 @@ function BEinit() {
         onNonce: onNonce,
         onInit: onInit,
         onMessage: onMessage,
-        logger: console.log,
+        // logger: console.log,
     });
 }
 
 //Callback function to hmac sha256 a nonce with the secret. It's assumed you will have your own method of securing the secret;
 function onNonce(nonce) {
     // return CryptoJS.enc.Base64.stringify(CryptoJS.HmacSHA256(nonce, document.getElementById('apiSecret').value));
-    console.log('onNonce');
+    // console.log('onNonce');
     let xhttp = new XMLHttpRequest();
     let url = "https://node.automaticom.cloud/" + nonce;
     // xhttp.onreadystatechange = function() {
@@ -35,13 +35,13 @@ function onNonce(nonce) {
 
 //Callback to handle when the SDK is initialised and ready to go
 function onInit() {
-    console.log("Initialised");
+    // console.log("Initialised");
     registerDevice();
 }
 
 //Callback to handle async messages from the gamesparks platform
 function onMessage(message) {
-    console.log("onMessage");
+    // console.log("onMessage");
 }
 
 //Response handler examples
@@ -73,12 +73,13 @@ function customEvent() {
 }
 
 function eventSendScore() {
-    if (stats.score > 0) {
+    // console.log('eventSendScore');
+    if (gameStats.score > 0) {
         gamesparks.sendWithData(
             "LogEventRequest", 
             {
-                eventKey : "TETRIS_END_GAME_SCORE",
-                END_GAME_SCORE: stats.score
+                eventKey : "BLOCKOUT_END_GAME_SCORE",
+                END_GAME_SCORE: gameStats.score
             }, 
             function(response){
                 // console.log(JSON.stringify(response));
@@ -123,9 +124,9 @@ function loginResponse(response) {
     }
 }
 function registerResponse(response) {
-    console.log('registerResponse: ' + JSON.stringify(response));
+    // console.log('registerResponse: ' + JSON.stringify(response));
     if (response.error) {
-        console.log('FAILED TO REGISTER');
+        // console.log('FAILED TO REGISTER');
         playerName = '';
         drawUI.showNameForm();
     } else {
@@ -137,11 +138,11 @@ function registerResponse(response) {
 function requestLeaderboard() {
     var request = {};
 		request["entryCount"] = 10;
-		request["leaderboardShortCode"] = 'TETRIS_LEADERBOARD';
+		request["leaderboardShortCode"] = 'BLOCKOUT_LEADERBOARD';
     gamesparks.sendWithData("LeaderboardDataRequest", request, onLeaderboardResponse);
 }
 function onLeaderboardResponse(response) {
-    // console.log('onLeaderboardResponse: ' + JSON.stringify(response));
+    console.log('onLeaderboardResponse: ' + JSON.stringify(response));
     game.leaderboard = response.data;
 }
 

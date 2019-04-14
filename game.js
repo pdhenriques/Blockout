@@ -17,20 +17,23 @@ class game {
         this.fillPit(w, h, d);
         this.activePiece;
         this.nextPiece;
-        console.log('new game!', this.pit);
+        // console.log('new game!', this.pit);
     }
 
     start() {
-        console.log('start');
+        // console.log('start');
         this.fillPit(this.pitWidth, this.pitHeight, this.pitDepth);
         this.state = 'run';
+        gameStats.reset();
         this.spawnNextPiece();
         this.spawnPiece();
     }
 
     stop() {
-        console.log('over');
+        // console.log('over');
         this.state = 'over';
+        eventSendScore();
+        requestLeaderboard();
         drawUI.gameOver();
     }
 
@@ -99,7 +102,7 @@ class game {
         this.spawnNextPiece();
         // drawGame.createActivePiece(this.activePiece);
         if (this.checkGameOver()) {
-            console.log('gameover!');
+            // console.log('gameover!');
             this.stop();
             return;
         } 
@@ -242,7 +245,7 @@ class game {
                 }
             }
             if (completePlane) {
-                console.log('### PLANE COMPLETED!!');
+                // console.log('### PLANE COMPLETED!!');
                 this.pit.splice(d,1);
                 this.pit.push(this.fillPlane(this.pitWidth, this.pitHeight));
                 completePlanes++;
@@ -251,8 +254,9 @@ class game {
         }
 
         if (completePlanes > 0) {
-            // stats.addScore(completeLines, this.level);
-            // this.gameSounds.lineClear(completeLines);
+            gameStats.addScore(completePlanes, 0);
+            // stats.addScore(completePlanes, this.level);
+            // this.gameSounds.lineClear(completePlanes);
             // this.setGameSpeed(floor(stats.fullLines/10));
         }
     }

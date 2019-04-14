@@ -23,6 +23,7 @@ Author: Muad
 15. Prevent rotation out-of-borders
 16. GameState - Start, run, over, pause
 17. Backend integration
+18. Score system and leaderboard
 ##### END OF Task List ####
 
 

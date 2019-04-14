@@ -137,3 +137,21 @@ form .question input[type="text"]:valid ~ label, form .question input[type="pass
   -webkit-transform: translate(5px, -35px) scale(0.6);
   transform: translate(5px, -35px) scale(0.6);
 }
+
+#leaderboard {
+  position: absolute;
+  display: inline-block;
+  min-width: 0px;
+  box-sizing: border-box;
+  padding: 30px 25px;
+  background-color: white;
+  border-radius: 40px;
+  color: #00aaaa;
+  font-size: 17px;
+  letter-spacing: 0.01em;
+  margin-bottom: 25px;
+  /* text-transform: uppercase; */
+  text-align: center;
+  left: 10%;
+  top: 0%;
+}

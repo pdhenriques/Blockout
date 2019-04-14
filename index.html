@@ -21,6 +21,7 @@
     <script type="text/javascript" src="game.js"></script>
     <script type="text/javascript" src="drawgame.js"></script>
     <script type="text/javascript" src="drawUI.js"></script>
+    <script type="text/javascript" src="gamestats.js"></script>
     <link rel="stylesheet" type="text/css" media="screen" href="style.css">
 </head>
 
@@ -45,6 +46,10 @@
     <form id="statePause" action="javascript:void(0);" style="display:none">
         <h1>Zzzz...</h1>
         <button onclick="javascript:drawUI.unPause()">Go!</button>
+    </form>
+    <form id="leaderboard" action="javascript:void(0);" style="display:block">
+        <h1>Leaderboard</h1>
+        <p id="lb-data"></p>
     </form>
 </body>
 

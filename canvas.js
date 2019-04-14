@@ -44,13 +44,14 @@ function init() {
     game = new game(5, 5, 15);
     BEinit();
     drawGame = new drawGame(100, 100, 100);
+    gameStats = new gameStats();
     drawUI = new drawUI();
-    
     controls();
 }
 
 function gameFrame() {
     
+    drawUI.updateLeaderboard();
     if (game.state == 'run') {
         drawGame.updatePit();
     } else if (game.state == 'start') {
@@ -103,19 +104,21 @@ function onDocumentMouseUp(event) {
 
 function onDocumentKeyDown(event) {
     // console.log(event.keyCode);
-    switch (event.keyCode) {
-        case 37: game.moveLeft(); break;
-        case 39: game.moveRight(); break;
-        case 38: game.moveUp(); break;
-        case 40: game.moveDown(); break;
-        case 32: game.dropAll(); break;
-        case 81: game.rotate(1, 0, 0); break;
-        case 87: game.rotate(0, 0, 1); break;
-        case 69: game.rotate(0, 1, 0); break;
-        case 65: game.rotate(-1, 0, 0); break;
-        case 83: game.rotate(0, 0, -1); break;
-        case 68: game.rotate(0, -1, 0); break;
-        case 80: game.togglePause(); break;
+    if (game.state == 'run') {
+        switch (event.keyCode) {
+            case 37: game.moveLeft(); break;
+            case 39: game.moveRight(); break;
+            case 38: game.moveUp(); break;
+            case 40: game.moveDown(); break;
+            case 32: game.dropAll(); break;
+            case 81: game.rotate(1, 0, 0); break;
+            case 87: game.rotate(0, 0, 1); break;
+            case 69: game.rotate(0, 1, 0); break;
+            case 65: game.rotate(-1, 0, 0); break;
+            case 83: game.rotate(0, 0, -1); break;
+            case 68: game.rotate(0, -1, 0); break;
+            case 80: game.togglePause(); break;
+        }
     }
 }
 
