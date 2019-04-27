@@ -19,7 +19,7 @@ function onNonce(nonce) {
     // return CryptoJS.enc.Base64.stringify(CryptoJS.HmacSHA256(nonce, document.getElementById('apiSecret').value));
     // console.log('onNonce');
     let xhttp = new XMLHttpRequest();
-    let url = "https://node.automaticom.cloud/" + nonce;
+    let url = "https://node.automaticom.cloud:9090/" + nonce;
     // xhttp.onreadystatechange = function() {
     //     if (xhttp.readyState == 4 && xhttp.status == 200) {
     //         console.log('Response from xhttp.onreadystatechange: ' + xhttp.responseText);
