@@ -10,6 +10,8 @@ var isShiftDown = false;
 var rollOverMesh, cubeGeo, cubeMaterial;
 var objects = [];
 
+var useBackend = true;
+
 init();
 animate();
 
@@ -42,7 +44,7 @@ function init() {
     // drawLine(0, 0,-1000,  0, 0, 1000, 0x0000ff);
 
     game = new game(5, 5, 15);
-    BEinit();
+    if (useBackend) BEinit();
     drawGame = new drawGame(100, 100, 100);
     gameStats = new gameStats();
     drawUI = new drawUI();

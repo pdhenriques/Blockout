@@ -109,7 +109,8 @@ function checkName() {
     if (input != '') {
         playerName = input;
         // console.log('register name: ' + playerName);
-        gamesparks.authenticationRequest("123", playerName, loginResponse)
+        if (useBackend) gamesparks.authenticationRequest("123", playerName, loginResponse)
+        else drawUI.hideNameForm();
     }
     return false;
 }
