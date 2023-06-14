@@ -10,7 +10,7 @@ var isShiftDown = false;
 var rollOverMesh, cubeGeo, cubeMaterial;
 var objects = [];
 
-var useBackend = true;
+var useBackend = false;
 
 init();
 animate();
